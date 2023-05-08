@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 
@@ -10,8 +9,8 @@ const Navbar = () => {
     try {
       await logOut();
       navigate('/');
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      console.log(e.message);
     }
   };
 

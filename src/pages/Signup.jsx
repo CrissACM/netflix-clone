@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signUp } = UserAuth();
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { signUp } = UserAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    setError('');
     try {
       await signUp(email, password);
-      navigate('/');
-    } catch (error) {
-      console.log(error);
+      navigate('/account');
+    } catch (e) {
+      setError(e.message);
+      console.log(e.message);
     }
   };
 
@@ -36,14 +39,14 @@ const Signup = () => {
                 className='w-full flex flex-col py-4'
               >
                 <input
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                   className='p-3 my-2 bg-gray-700 rounded'
                   type='email'
                   placeholder='Email'
                   autoComplete='email'
                 />
                 <input
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                   className='p-3 my-2 bg-gray-700 rounded'
                   type='password'
                   placeholder='Password'
